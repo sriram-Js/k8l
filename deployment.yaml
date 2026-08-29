@@ -6,7 +6,7 @@ metadata:
   labels:
     app: k8l-backend
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: k8l-backend
