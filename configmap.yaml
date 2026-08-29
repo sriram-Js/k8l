@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8l-backend-config
+  namespace: k8l
+data:
+  DJANGO_DEBUG: "False"
+  DJANGO_ALLOWED_HOSTS: "*"
+  CSRF_TRUSTED_ORIGINS: "https://api.eks.cloudzyra.space,http://localhost:5173"
+  CORS_ALLOW_ALL_ORIGINS: "True"

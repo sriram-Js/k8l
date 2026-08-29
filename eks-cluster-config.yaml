@@ -1,0 +1,37 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: ekstestingk8
+  region: us-east-1
+  version: "1.36"
+
+vpc:
+  id: "vpc-0a9559f3a8223049d"
+  subnets:
+    public:
+      us-east-1a: { id: subnet-0ad19e3808e217e88 }
+      us-east-1b: { id: subnet-04bc733574c400145 }
+      us-east-1c: { id: subnet-0e5b63c977210f68d }
+    private:
+      us-east-1a: { id: subnet-09318ac2fe2618109 }
+      us-east-1b: { id: subnet-0c423bb5a2a9a7405 }
+      us-east-1c: { id: subnet-0ee443dbd9d557ee7 }
+
+managedNodeGroups:
+  - name: k8l-nodes
+    instanceType: t3.nano
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 3
+    privateNetworking: true
+    volumeSize: 20
+    ssh:
+      allow: false
+    labels:
+      role: worker
+    tags:
+      nodegroup-role: worker
+
+iam:
+  withOIDC: true

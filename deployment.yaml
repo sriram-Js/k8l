@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8l-backend
+  namespace: k8l
+  labels:
+    app: k8l-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: k8l-backend
+  template:
+    metadata:
+      labels:
+        app: k8l-backend
+    spec:
+      serviceAccountName: approle-sa
+      containers:
+      - name: backend
+        image: 301811561350.dkr.ecr.us-east-1.amazonaws.com/eks-testing:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: http
+        envFrom:
+        - configMapRef:
+            name: k8l-backend-config
+        - secretRef:
+            name: k8l-backend-secrets
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+        livenessProbe:
+          httpGet:
+            path: /healthz/
+            port: 8000
+          initialDelaySeconds: 20
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz/
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      restartPolicy: Always
