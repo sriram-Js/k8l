@@ -21,9 +21,9 @@ vpc:
 managedNodeGroups:
   - name: k8l-nodes
     instanceType: t3.nano
-    desiredCapacity: 1
-    minSize: 1
-    maxSize: 3
+    desiredCapacity: 0
+    minSize: 0
+    maxSize: 1
     privateNetworking: true
     volumeSize: 20
     ssh:
