@@ -30,10 +30,10 @@ spec:
             name: k8l-backend-secrets
         resources:
           requests:
-            cpu: 500m
-            memory: 512Mi
+            cpu: 10m
+            memory: 220Mi
           limits:
-            cpu: 1000m
+            cpu: 500m
             memory: 1Gi
         livenessProbe:
           httpGet:
